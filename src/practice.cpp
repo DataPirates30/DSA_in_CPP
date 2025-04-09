@@ -47,14 +47,33 @@ class LinkedList{
         }
 
         void Deletion(int value){
-            Node* temp = head;
-            while(temp!=nullptr){
-                if(temp->next!=nullptr && temp->value == value){
-                    cout<<"Value found";
-                }
-                temp = temp->next;
+            if(head == nullptr){
+                cout<<"The list is empty"<<endl;
+                return;
             }
-            cout<<"Element doesn't exist in the list"<<endl;
+            if(head->value == value){
+                Node* temp  = head;
+                head = head->next;
+                delete temp;
+                return;
+            }
+
+            // Now let's find the value in the linkedlist
+
+            Node* previous_node = nullptr;
+            Node* current_node = head;
+            while(current_node != nullptr && current_node->value!=value){
+                previous_node = current_node;
+                current_node = current_node->next;
+            }
+
+            if(current_node!=nullptr){
+                previous_node->next = current_node->next;
+                delete current_node;
+            }
+            else{
+                cout<<"Value not found"<<endl;
+            }
         }
 };
 
@@ -69,7 +88,6 @@ int main(){
     l1.insertElement(60);
     l1.insertElement(70);
     l1.insertElement(90);
-
     l1.displayElements();
 
     int value;
